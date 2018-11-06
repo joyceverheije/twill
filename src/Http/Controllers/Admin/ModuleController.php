@@ -136,12 +136,16 @@ abstract class ModuleController extends Controller
          * Available columns of the index view
          */
         if (!isset($this->indexColumns)) {
-            $this->indexColumns = [
-                $this->titleColumnKey => [
-                    'title' => ucfirst($this->titleColumnKey),
-                    'field' => $this->titleColumnKey,
-                    'sort' => true,
-                ],
+            if ($this->moduleHas('medias')) {
+                $this->indexColumns['thumb'] = [
+                    'thumb' => true,
+                ];
+            }
+
+            $this->indexColumns[$this->titleColumnKey] = [
+                'title' => ucfirst($this->titleColumnKey),
+                'field' => $this->titleColumnKey,
+                'sort' => true,
             ];
         }
 
