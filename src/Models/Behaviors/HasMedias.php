@@ -42,13 +42,11 @@ trait HasMedias
         }
 
         if ($media) {
-            $crop_params = ['rect' => $media->pivot->crop_x . ',' . $media->pivot->crop_y . ',' . $media->pivot->crop_w . ',' . $media->pivot->crop_h] + $params;
-
             if ($cms) {
-                return ImageService::getCmsUrl($media->uuid, $crop_params);
+                return ImageService::getCmsUrl($media->uuid, $params);
             }
 
-            return ImageService::getUrl($media->uuid, $crop_params);
+            return ImageService::getUrlWithCrop($media->uuid, $media->pivot->toArray(), $params);
         }
 
         if ($has_fallback) {
